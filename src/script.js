@@ -8,8 +8,8 @@ const downLights = document.getElementsByClassName('light-down');
 
 const timeTextParagraph = document.getElementById('time-text');
 
-let startTime;
-let endTime;
+let startTime = 0;
+let endTime = 0;
 
 startButton.addEventListener('click', () => {
   startCount();
@@ -17,7 +17,7 @@ startButton.addEventListener('click', () => {
 
 stopButton.addEventListener('click', () => {
   endTime = Date.now();
-  if (startTime === undefined || endTime === undefined) {
+  if (startTime === 0 || endTime === 0) {
     timeTextParagraph.innerHTML = 'Falstart! Too early!';
   } else {
     const timeDiff = endTime - startTime;
@@ -26,7 +26,7 @@ stopButton.addEventListener('click', () => {
   }
   startButton.style.visibility = 'hidden';
   stopButton.style.visibility = 'hidden';
-  againButton.style.visibility = 'visible';
+  
 });
 
 againButton.addEventListener('click', () => {
@@ -35,6 +35,8 @@ againButton.addEventListener('click', () => {
 
 
 async function startCount() {
+  startTime = 0;
+  endTime = 0;
   timeTextParagraph.innerHTML = '';
   startButton.style.visibility = 'hidden';
   againButton.style.visibility = 'hidden';
@@ -46,6 +48,7 @@ async function startCount() {
       for (let j=0 ; j< downLights.length; j++) {
         downLights[j].style.backgroundColor = 'black';
         startTime = Date.now();
+        setTimeout(()=> againButton.style.visibility = 'visible', 1000);
       }
     }
   }  
