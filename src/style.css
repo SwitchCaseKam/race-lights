@@ -10,6 +10,7 @@ body {
 }
 
 .main-icon {
+  margin: 0.2em;
   filter: invert(1);
 }
 
@@ -57,6 +58,10 @@ body {
   padding: 0.25em;
 }
 
+.action-button:hover {
+  transform: scale(1.1);
+}
+
 .basic-info {
   margin: 0.25em;
   text-align: center;
@@ -72,11 +77,11 @@ body {
   visibility: hidden;
 }
 
-#stop-button {
-  visibility: hidden;
+#go-button {
+  visibility: visible;
 }
 
-@media screen and (max-width: 600px) {
+@media (max-width: 600px) {
   body {
     background-color: olive;
   }
