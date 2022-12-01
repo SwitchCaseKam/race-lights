@@ -1,4 +1,7 @@
-const timer = ms => new Promise(res => setTimeout(res, ms))
+const timer = ms => new Promise(res => {
+  console.log('ppp')
+  return setTimeout(res, ms)
+})
 
 const goButton = document.getElementById('go-button');
 const againButton = document.getElementById('again-button');
@@ -12,17 +15,20 @@ let endTime = 0;
 
 let countingInProgress = false;
 
+
 let countingSound = new Audio('audio/start-13691.mp3');
 let startSound = new Audio('audio/usp-pistol-sfx-80490.mp3');
 
-
+let intervalID;
 
 
 goButton.addEventListener('click', () => {
   if (!countingInProgress) {
-    startCounter();
+    testSetInterval();
   } else {
-    stopCounter();
+    clearInterval(intervalID);
+    turnOffAllLights();
+    testSetInterval();
   }
 });
 
@@ -35,12 +41,17 @@ document.addEventListener('keydown', (event) => {
     if (!countingInProgress) {
       startCounter();
     } else {
-      stopCounter();
+      if (reactionMeasurementDone) {
+        startCounter();
+      } else {
+        stopCounter();
+      }
     }
   }
 });
 
 async function startCounter() {
+  reactionMeasurementDone = false;
   startTime = 0;
   endTime = 0;
   timeTextParagraph.innerHTML = '';
@@ -60,7 +71,7 @@ async function startCounter() {
         setTimeout(()=> {
           againButton.style.visibility = 'visible';
           countingInProgress = false;
-        }, 1000);
+        }, 1500);
       }
     }
   }  
@@ -76,4 +87,31 @@ function stopCounter() {
     timeTextParagraph.innerHTML = 'Your reaction time: ' + timeDiff/1000 + ' s';
   }
   goButton.style.visibility = 'hidden';
+  countingInProgress = false;
+}
+
+
+function testSetInterval() {
+  let i = 0;
+  intervalID = setInterval(() =>{
+    console.log('i = ', i);
+    countingInProgress = true;
+    if (i === downLights.length) {
+      clearInterval(intervalID);
+      countingInProgress = false;
+      turnOffAllLights();
+      startSound.play();
+    } else {
+      countingSound.play();
+      downLights[i].style.backgroundColor = 'red';
+    }
+    i++;
+  }, 1000);
+}
+
+function turnOffAllLights() {
+  for (let j=0 ; j< downLights.length; j++) {
+    console.log('a')
+    downLights[j].style.backgroundColor = '#484643';
+  }
 }

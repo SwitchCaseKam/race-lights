@@ -83,6 +83,6 @@ body {
 
 @media (max-width: 600px) {
   body {
-    background-color: olive;
+    font-size: 100%;
   }
 }
