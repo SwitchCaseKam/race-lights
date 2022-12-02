@@ -68,9 +68,17 @@ body {
 }
 
 .time-text {
+  color: white;
+}
+
+#primary-time-text {
   font-size: 1.6em;
   font-weight: 1000;
-  color: white;
+}
+
+#secondary-time-text {
+  font-size: 1em;
+  font-weight: 500;
 }
 
 #again-button {
