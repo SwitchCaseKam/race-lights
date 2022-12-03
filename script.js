@@ -15,29 +15,10 @@ let startSound = new Audio('audio/usp-pistol-sfx-80490.mp3');
 let lightsCountingIntervalCallback;
 const timer = ms => new Promise(res => setTimeout(res, ms));
 
-goButton.addEventListener('click', () => {
-  if (!countingInProgress) {
-    startLightsInterval();
-  } else {
-    stopCounter();
-    if (reactionMeasurementDone) {
-      clearInterval(lightsCountingIntervalCallback);
-      turnOffAllLights();
-    }
-  }
-});
-
-document.addEventListener('keydown', (event) => {
-  if (event.code === 'Space') {
-    if (!countingInProgress) {
-      startLightsInterval();
-    } else {
-      stopCounter();
-      if (reactionMeasurementDone) {
-        clearInterval(lightsCountingIntervalCallback);
-        turnOffAllLights();
-      }
-    }
+goButton.addEventListener('click', () => handleRaceStart());
+document.addEventListener('keydown', (event) => { 
+  if(event.code === 'Space') {
+    handleRaceStart();
   }
 });
 
@@ -58,8 +39,8 @@ function stopCounter() {
 
 function startLightsInterval() {
   reactionMeasurementDone = false;
-  primaryTimeText.innerHTML = '';
-  secondaryTimeText.innerHTML = '';
+  primaryTimeText.innerHTML = ' ';
+  secondaryTimeText.innerHTML = ' ';
   goButton.style.visibility = 'visible';
   startTime = 0;
   endTime = 0;
@@ -77,6 +58,21 @@ function startLightsInterval() {
     }
     lightIndex++;
   }, 1000);
+}
+
+function handleRaceStart() {
+  if (!countingInProgress) {
+    if (lightsCountingIntervalCallback) {
+      clearInterval(lightsCountingIntervalCallback);
+    }
+    startLightsInterval();
+  } else {
+    stopCounter();
+    if (reactionMeasurementDone) {
+      clearInterval(lightsCountingIntervalCallback);
+      turnOffAllLights();
+    }
+  }
 }
 
 function turnOffAllLights() {
