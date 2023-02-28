@@ -17,7 +17,7 @@ const timer = ms => new Promise(res => setTimeout(res, ms));
 
 goButton.addEventListener('click', () => handleRaceStart());
 document.addEventListener('keydown', (event) => { 
-  if(event.code === 'Space') {
+  if (event.code === 'Space') {
     handleRaceStart();
   }
 });
